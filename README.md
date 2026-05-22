@@ -24,7 +24,7 @@ Giri Dikshit.
 <a href="https://github.com/yugalranamagar">Rana Yugal
   <img align="left" alt="Pun Sharada | Github" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/github.svg" />
 </a></br>
-<a href="https://github.com/surjeet369">Karki Chhetri Surjeet
+<a href="https://github.com/Dikshitgiri">Giri Dikshit
   <img align="left" alt="Karki Chhetri Surjeet | Github" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/github.svg" />
 </a></br>
 </br>
