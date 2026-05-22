@@ -11,9 +11,7 @@ Rana Yugal,
 Pokharel Sohan,
 Pun Sharada,
 Giri Dikshit.
-</br>
-<img src="https://static.vecteezy.com/system/resources/thumbnails/005/441/358/small_2x/inventory-management-with-goods-demand-and-stock-supply-tiny-person-concept-vector.jpg"  type="png/jpg" height="400px" width="400px">
-</br>
+
 <h4>Team Members</h4></br>
 <a href="https://github.com/Sohan-Pokharel">Pokharel Sohan
   <img align="left" alt="Pokharel Sohan | Github" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/github.svg" />
