@@ -50,5 +50,5 @@ use.</p>
 <h6>Document Requirement</h6>
 <p>The document process is completed ⌛</p>
 <p>Front end developement is on the process</p>
-<P>Login and credentials phase is also on the process</P>
+<P>Dashboard is complete</P>
 </br>
