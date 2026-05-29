@@ -10,14 +10,14 @@ plugins {
 }
 
 android {
-    compileSdk = libs.versions.compile.sdk.version.get().toInt()
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.waseefakhtar.carebuddy"
-        minSdk = libs.versions.min.sdk.version.get().toInt()
-        targetSdk = libs.versions.target.sdk.version.get().toInt()
-        versionCode = libs.versions.version.code.get().toInt()
-        versionName = libs.versions.version.name.get()
+        applicationId = "com.team.carebuddy"
+        minSdk = 31
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -54,7 +54,7 @@ android {
         arg("room.schemaLocation", "$projectDir/schemas")
     }
 
-    namespace = "com.waseefakhtar.carebuddy"
+    namespace = "com.team.carebuddy"
 }
 
 dependencies {

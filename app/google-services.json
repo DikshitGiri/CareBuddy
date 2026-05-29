@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:995841033966:android:f9fa2a4c671ec4993815ff",
         "android_client_info": {
-          "package_name": "com.waseefakhtar.carebuddy"
+          "package_name": "com.team.carebuddy"
         }
       },
       "oauth_client": [
@@ -38,7 +38,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:995841033966:android:ef8d3bbc8a6a40953815ff",
         "android_client_info": {
-          "package_name": "com.waseefakhtar.carebuddy.dev"
+          "package_name": "com.team.carebuddy.dev"
         }
       },
       "oauth_client": [
