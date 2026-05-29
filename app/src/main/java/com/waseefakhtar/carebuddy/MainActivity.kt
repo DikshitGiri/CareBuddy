@@ -4,8 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.waseefakhtar.carebuddy.analytics.AnalyticsEvents
-import com.waseefakhtar.carebuddy.analytics.AnalyticsHelper
+import com.waseefakhtar.doseapp.CareBuddyApp
+import com.waseefakhtar.doseapp.analytics.AnalyticsEvents
+import com.waseefakhtar.doseapp.analytics.AnalyticsHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

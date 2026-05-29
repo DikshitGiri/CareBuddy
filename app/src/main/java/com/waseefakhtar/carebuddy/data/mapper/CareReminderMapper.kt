@@ -10,11 +10,11 @@ fun CareReminderEntity.toCareReminder(): CareReminder {
         id = id,
         name = name,
         dosage = dosage,
-        frequency = recurrence,
+        recurrence = recurrence,
         startDate = startDate ?: Date(),
         endDate = endDate,
         reminderTime = reminderTime,
-        reminderTaken = reminderTaken,
+        isTaken = reminderTaken,
         type = CareReminderType.valueOf(type)
     )
 }
@@ -24,11 +24,11 @@ fun CareReminder.toCareReminderEntity(): CareReminderEntity {
         id = id,
         name = name,
         dosage = dosage,
-        recurrence = frequency,
+        recurrence = recurrence,
         startDate = startDate,
         endDate = endDate,
         reminderTime = reminderTime,
-        reminderTaken = reminderTaken,
+        reminderTaken = isTaken,
         type = type.name
     )
 }
