@@ -52,7 +52,7 @@ import androidx.navigation.NavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import com.waseefakhtar.doseapp.R
+import com.waseefakhtar.carebuddy.R
 import com.waseefakhtar.doseapp.analytics.AnalyticsEvents
 import com.waseefakhtar.doseapp.domain.model.Medication
 import com.waseefakhtar.doseapp.extension.toFormattedDateShortString
@@ -309,7 +309,7 @@ fun DailyMedications(
 @Composable
 fun DatesHeader(
     lastSelectedDate: String,
-    onDateSelected: (CalendarModel.DateModel) -> Unit, // Callback to pass the selected date){}
+    onDateSelected: (CalendarModel.DateModel) -> Unit, // Callback to pass the selected date
     logEvent: (String) -> Unit
 ) {
     val dataSource = CalendarDataSource()
@@ -343,7 +343,7 @@ fun DatesHeader(
                 val calendar = Calendar.getInstance()
                 calendar.time = endDate
 
-                calendar.add(Calendar.DAY_OF_YEAR, 2)
+                calendar.add(Calendar.DAY_OF_YEAR, 2) // Add one day from endDate
                 val finalStartDate = calendar.time
 
                 calendarModel = dataSource.getData(startDate = finalStartDate, lastSelectedDate = calendarModel.selectedDate.date)
@@ -352,84 +352,16 @@ fun DatesHeader(
         )
         DateList(
             data = calendarModel,
-            onDateClickListener = { date ->
+            onDateSelected = { date ->
                 calendarModel = calendarModel.copy(
                     selectedDate = date,
                     visibleDates = calendarModel.visibleDates.map {
-                        it.copy(
-                            isSelected = it.date.toFormattedDateString() == date.date.toFormattedDateString()
-                        )
+                        it.copy(isSelected = it.date.toFormattedDateString() == date.date.toFormattedDateString())
                     }
                 )
                 onDateSelected(date)
             }
         )
-    }
-}
-
-@Composable
-fun DateList(
-    data: CalendarModel,
-    onDateClickListener: (CalendarModel.DateModel) -> Unit
-) {
-    LazyRow(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        items(items = data.visibleDates) { date ->
-            DateItem(date, onDateClickListener)
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DateItem(
-    date: CalendarModel.DateModel,
-    onClickListener: (CalendarModel.DateModel) -> Unit,
-) {
-    Column {
-        Text(
-            text = date.day, // day "Mon", "Tue"
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Normal,
-            color = MaterialTheme.colorScheme.outline
-        )
-        Card(
-            modifier = Modifier
-                .padding(vertical = 4.dp, horizontal = 4.dp),
-            onClick = { onClickListener(date) },
-            colors = cardColors(
-                // background colors of the selected date
-                // and the non-selected date are different
-                containerColor = if (date.isSelected) {
-                    MaterialTheme.colorScheme.tertiary
-                } else {
-                    MaterialTheme.colorScheme.surface
-                }
-            ),
-        ) {
-            Column(
-                modifier = Modifier
-                    .width(42.dp)
-                    .height(42.dp)
-                    .padding(8.dp)
-                    .fillMaxSize(), // Fill the available size in the Column
-                verticalArrangement = Arrangement.Center, // Center vertically
-                horizontalAlignment = Alignment.CenterHorizontally // Center horizontally
-            ) {
-                Text(
-                    text = date.date.toFormattedDateShortString(),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = if (date.isSelected) {
-                        FontWeight.Medium
-                    } else {
-                        FontWeight.Normal
-                    }
-                )
-            }
-        }
     }
 }
 
@@ -440,14 +372,16 @@ fun DateHeader(
     onNextClickListener: (Date) -> Unit
 ) {
     Row(
-        modifier = Modifier.padding(vertical = 16.dp),
+        modifier = Modifier
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             modifier = Modifier
                 .weight(1f)
                 .align(Alignment.CenterVertically),
             text = if (data.selectedDate.isToday) {
-                stringResource(R.string.today)
+                "Today"
             } else {
                 data.selectedDate.date.toFormattedMonthDateString()
             },
@@ -456,30 +390,92 @@ fun DateHeader(
             color = MaterialTheme.colorScheme.tertiary
         )
         IconButton(onClick = {
-            onPrevClickListener(data.startDate.date)
+            onPrevClickListener(data.visibleDates[0].date)
         }) {
             Icon(
                 imageVector = Icons.Filled.KeyboardArrowLeft,
-                tint = MaterialTheme.colorScheme.tertiary,
                 contentDescription = "Back"
             )
         }
         IconButton(onClick = {
-            onNextClickListener(data.endDate.date)
+            onNextClickListener(data.visibleDates.last().date)
         }) {
             Icon(
                 imageVector = Icons.Filled.KeyboardArrowRight,
-                tint = MaterialTheme.colorScheme.tertiary,
                 contentDescription = "Next"
             )
         }
     }
 }
 
-sealed class MedicationListItem {
-    data class OverviewItem(val medicationsToday: List<Medication>, val isMedicationListEmpty: Boolean) : MedicationListItem()
-    data class MedicationItem(val medication: Medication) : MedicationListItem()
-    data class HeaderItem(val headerText: String) : MedicationListItem()
+@Composable
+fun DateList(
+    data: CalendarModel,
+    onDateSelected: (CalendarModel.DateModel) -> Unit
+) {
+    LazyRow(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(items = data.visibleDates) { date ->
+            DateItem(date, onDateSelected)
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DateItem(
+    date: CalendarModel.DateModel,
+    onDateSelected: (CalendarModel.DateModel) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .width(44.dp)
+            .height(68.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Text(
+            text = date.day,
+            style = MaterialTheme.typography.labelMedium,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.tertiary
+        )
+        Card(
+            modifier = Modifier
+                .width(44.dp)
+                .height(44.dp),
+            shape = RoundedCornerShape(16.dp),
+            colors = cardColors(
+                containerColor = if (date.isSelected) {
+                    MaterialTheme.colorScheme.tertiary
+                } else {
+                    MaterialTheme.colorScheme.surfaceVariant
+                }
+            ),
+            onClick = {
+                onDateSelected(date)
+            }
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = date.date.toFormattedDateShortString(),
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = if (date.isSelected) {
+                        MaterialTheme.colorScheme.onTertiary
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    }
+                )
+            }
+        }
+    }
 }
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -489,110 +485,108 @@ fun PermissionDialog(
     logEvent: (String) -> Unit
 ) {
     if (askNotificationPermission && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)) {
-        val notificationPermissionState = rememberPermissionState(Manifest.permission.POST_NOTIFICATIONS) { isGranted ->
-            when (isGranted) {
-                true -> logEvent.invoke(AnalyticsEvents.NOTIFICATION_PERMISSION_GRANTED)
-                false -> logEvent.invoke(AnalyticsEvents.NOTIFICATION_PERMISSION_REFUSED)
-            }
-        }
+        val notificationPermissionState = rememberPermissionState(
+            Manifest.permission.POST_NOTIFICATIONS
+        )
         if (!notificationPermissionState.status.isGranted) {
-            val openAlertDialog = remember { mutableStateOf(true) }
-
-            when {
-                openAlertDialog.value -> {
-                    logEvent.invoke(AnalyticsEvents.NOTIFICATION_PERMISSION_DIALOG_SHOWN)
-                    AlertDialog(
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Default.Notifications,
-                                contentDescription = stringResource(R.string.notifications)
-                            )
-                        },
-                        title = {
-                            Text(text = stringResource(R.string.notification_permission_required))
-                        },
-                        text = {
-                            Text(text = stringResource(R.string.notification_permission_required_description_message))
-                        },
-                        onDismissRequest = {
-                            openAlertDialog.value = false
-                            logEvent.invoke(AnalyticsEvents.NOTIFICATION_PERMISSION_DIALOG_DISMISSED)
-                        },
-                        confirmButton = {
-                            Button(
-                                onClick = {
-                                    notificationPermissionState.launchPermissionRequest()
-                                    openAlertDialog.value = false
-                                    logEvent.invoke(AnalyticsEvents.NOTIFICATION_PERMISSION_DIALOG_ALLOW_CLICKED)
-                                }
-                            ) {
-                                Text(stringResource(R.string.allow))
+            var showDialog by remember { mutableStateOf(true) }
+            if (showDialog) {
+                AlertDialog(
+                    onDismissRequest = {
+                        showDialog = false
+                        logEvent.invoke(AnalyticsEvents.NOTIFICATION_PERMISSION_DIALOG_DISMISSED)
+                    },
+                    title = {
+                        Text(
+                            text = stringResource(R.string.notification_permission_required),
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+                    },
+                    text = {
+                        Text(
+                            text = stringResource(R.string.notification_permission_required_description_message),
+                            style = MaterialTheme.typography.titleSmall,
+                        )
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                notificationPermissionState.launchPermissionRequest()
+                                showDialog = false
+                                logEvent.invoke(AnalyticsEvents.NOTIFICATION_PERMISSION_DIALOG_ALLOW_CLICKED)
                             }
+                        ) {
+                            Text(stringResource(R.string.allow))
                         }
-                    )
-                }
+                    },
+                    dismissButton = {
+                        Button(
+                            onClick = {
+                                showDialog = false
+                                logEvent.invoke(AnalyticsEvents.NOTIFICATION_PERMISSION_DIALOG_DISMISSED)
+                            }
+                        ) {
+                            Text(stringResource(R.string.cancel))
+                        }
+                    }
+                )
             }
         }
     }
 }
 
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun PermissionAlarmDialog(
     askAlarmPermission: Boolean,
     logEvent: (String) -> Unit
 ) {
-    val context = LocalContext.current
-    val alarmManager = ContextCompat.getSystemService(context, AlarmManager::class.java)
-    if (askAlarmPermission && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)) {
-        val alarmPermissionState = rememberPermissionState(Manifest.permission.SCHEDULE_EXACT_ALARM) { isGranted ->
-            when (isGranted) {
-                true -> logEvent.invoke(AnalyticsEvents.ALARM_PERMISSION_GRANTED)
-                false -> logEvent.invoke(AnalyticsEvents.ALARM_PERMISSION_REFUSED)
-            }
-        }
+    if (askAlarmPermission && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)) {
+        val context = LocalContext.current
+        val alarmManager = ContextCompat.getSystemService(context, AlarmManager::class.java)
         if (alarmManager?.canScheduleExactAlarms() == false) {
-            val openAlertDialog = remember { mutableStateOf(true) }
-
-            when {
-                openAlertDialog.value -> {
-
-                    logEvent.invoke(AnalyticsEvents.ALARM_PERMISSION_DIALOG_SHOWN)
-
-                    AlertDialog(
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Default.Notifications,
-                                contentDescription = stringResource(R.string.alarms)
-                            )
-                        },
-                        title = {
-                            Text(text = stringResource(R.string.alarms_permission_required))
-                        },
-                        text = {
-                            Text(text = stringResource(R.string.alarms_permission_required_description_message))
-                        },
-                        onDismissRequest = {
-                            openAlertDialog.value = false
-                            logEvent.invoke(AnalyticsEvents.ALARM_PERMISSION_DIALOG_DISMISSED)
-                        },
-                        confirmButton = {
-                            Button(
-                                onClick = {
-                                    Intent().also { intent ->
-                                        intent.action = Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
-                                        context.startActivity(intent)
-                                    }
-
-                                    openAlertDialog.value = false
-                                    logEvent.invoke(AnalyticsEvents.ALARM_PERMISSION_DIALOG_ALLOW_CLICKED)
-                                }
-                            ) {
-                                Text(stringResource(R.string.allow))
+            var showDialog by remember { mutableStateOf(true) }
+            if (showDialog) {
+                AlertDialog(
+                    onDismissRequest = {
+                        showDialog = false
+                        logEvent.invoke(AnalyticsEvents.ALARM_PERMISSION_DIALOG_DISMISSED)
+                    },
+                    title = {
+                        Text(
+                            text = stringResource(R.string.alarms_permission_required),
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+                    },
+                    text = {
+                        Text(
+                            text = stringResource(R.string.alarms_permission_required_description_message),
+                            style = MaterialTheme.typography.titleSmall,
+                        )
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                showDialog = false
+                                context.startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
+                                logEvent.invoke(AnalyticsEvents.ALARM_PERMISSION_DIALOG_ALLOW_CLICKED)
                             }
+                        ) {
+                            Text(stringResource(R.string.allow))
                         }
-                    )
-                }
+                    },
+                    dismissButton = {
+                        Button(
+                            onClick = {
+                                showDialog = false
+                                logEvent.invoke(AnalyticsEvents.ALARM_PERMISSION_DIALOG_DISMISSED)
+                            }
+                        ) {
+                            Text(stringResource(R.string.cancel))
+                        }
+                    }
+                )
             }
         }
     }

@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import com.waseefakhtar.carebuddy.R
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

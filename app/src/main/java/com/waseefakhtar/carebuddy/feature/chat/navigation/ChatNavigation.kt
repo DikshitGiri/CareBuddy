@@ -4,7 +4,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.waseefakhtar.carebuddy.core.navigation.CareBuddyNavigationDestination
+import com.waseefakhtar.doseapp.core.navigation.CareBuddyNavigationDestination
 import com.waseefakhtar.carebuddy.feature.chat.ChatRoute
 
 object ChatDestination : CareBuddyNavigationDestination {

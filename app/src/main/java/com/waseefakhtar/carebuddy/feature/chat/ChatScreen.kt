@@ -81,7 +81,7 @@ fun ChatScreen(
                     placeholder = { Text("How can I help you?") },
                     shape = RoundedCornerShape(28.dp),
                     maxLines = 3,
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                    colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = MaterialTheme.colorScheme.primary,
                         unfocusedBorderColor = MaterialTheme.colorScheme.outline
                     )
@@ -115,7 +115,6 @@ fun ChatScreen(
 @Composable
 fun ChatBubble(message: ChatMessage) {
     val isUser = message.isUser
-    val alignment = if (isUser) Alignment.CenterHorizontally else Alignment.CenterHorizontally // Box alignment handled by outer column
     
     Column(
         modifier = Modifier.fillMaxWidth(),

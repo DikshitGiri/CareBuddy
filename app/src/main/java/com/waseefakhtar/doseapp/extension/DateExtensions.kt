@@ -1,6 +1,6 @@
 package com.waseefakhtar.doseapp.extension
 
-import com.waseefakhtar.doseapp.R
+import com.waseefakhtar.carebuddy.R
 
 data class Duration(
     val primary: Int,

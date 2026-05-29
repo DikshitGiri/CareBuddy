@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.waseefakhtar.doseapp.R
+import com.waseefakhtar.carebuddy.R
 import com.waseefakhtar.doseapp.extension.toFormattedDateString
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -14,7 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.waseefakhtar.doseapp.R
+import com.waseefakhtar.carebuddy.R
 import com.waseefakhtar.doseapp.extension.formatDuration
 import com.waseefakhtar.doseapp.util.formatDurationText
 import java.util.Calendar
