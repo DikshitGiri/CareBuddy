@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -35,7 +34,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -43,6 +41,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.team.carebuddy.analytics.AnalyticsEvents
 import com.team.carebuddy.analytics.AnalyticsHelper
+import com.team.carebuddy.feature.addmedication.navigation.AddMedicationDestination
 import com.team.carebuddy.navigation.CareBuddyNavHost
 import com.team.carebuddy.navigation.CareBuddyTopLevelNavigation
 import com.team.carebuddy.navigation.TOP_LEVEL_DESTINATIONS
@@ -127,7 +126,6 @@ fun CareBuddyApp(
                         modifier = Modifier
                             .padding(padding)
                             .consumeWindowInsets(padding)
-                            .zIndex(1f)
                     )
                 }
             }
@@ -196,9 +194,8 @@ fun CareBuddyFAB(navController: NavController, analyticsHelper: AnalyticsHelper)
         },
         onClick = {
             analyticsHelper.logEvent(AnalyticsEvents.ADD_MEDICATION_CLICKED_FAB)
-            // navController.navigate(AddMedicationDestination.route)
+            navController.navigate(AddMedicationDestination.route)
         },
-        elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp),
         containerColor = MaterialTheme.colorScheme.tertiary
     )
 }
