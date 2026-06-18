@@ -1,4 +1,4 @@
-package com.waseefakhtar.carebuddy.app
+package com.waseefakhtar.carebuddy
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
@@ -42,17 +42,17 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.waseefakhtar.carebuddy.R
-import com.waseefakhtar.doseapp.analytics.AnalyticsEvents
-import com.waseefakhtar.doseapp.analytics.AnalyticsHelper
-import com.waseefakhtar.doseapp.feature.addmedication.navigation.AddMedicationDestination
-import com.waseefakhtar.doseapp.feature.history.HistoryDestination
-import com.waseefakhtar.doseapp.feature.home.navigation.HomeDestination
-import com.waseefakhtar.doseapp.navigation.CareBuddyNavHost
-import com.waseefakhtar.doseapp.navigation.CareBuddyTopLevelNavigation
-import com.waseefakhtar.doseapp.navigation.TOP_LEVEL_DESTINATIONS
-import com.waseefakhtar.doseapp.navigation.TopLevelDestination
-import com.waseefakhtar.doseapp.ui.theme.CareBuddyTheme
-import com.waseefakhtar.doseapp.util.SnackbarUtil
+import com.team.carebuddy.analytics.AnalyticsEvents
+import com.team.carebuddy.analytics.AnalyticsHelper
+import com.team.carebuddy.feature.addmedication.navigation.AddMedicationDestination
+import com.team.carebuddy.feature.history.HistoryDestination
+import com.team.carebuddy.feature.home.navigation.HomeDestination
+import com.team.carebuddy.navigation.CareBuddyNavHost
+import com.team.carebuddy.navigation.CareBuddyTopLevelNavigation
+import com.team.carebuddy.navigation.TOP_LEVEL_DESTINATIONS
+import com.team.carebuddy.navigation.TopLevelDestination
+import com.team.carebuddy.ui.theme.CareBuddyTheme
+import com.team.carebuddy.util.SnackbarUtil
 
 @Composable
 fun CareBuddyApp(
